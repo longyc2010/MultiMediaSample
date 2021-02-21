@@ -1,11 +1,11 @@
 package com.hejunlin.mediacodcsample;
 
+import android.content.res.AssetManager;
 import android.media.MediaCodec;
 import android.media.MediaExtractor;
 import android.media.MediaFormat;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -16,7 +16,6 @@ import java.nio.ByteBuffer;
 
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
-    private static final String SAMPLE = Environment.getExternalStorageDirectory() + "/device-2016-11-15.mp4";
     private static final String TAG = MainActivity.class.getSimpleName();
     private WorkThread mWorkThread = null;
 
@@ -65,17 +64,18 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         @Override
         public void run() {
             mMediaExtractor = new MediaExtractor();//数据解析器
+            AssetManager am = getAssets();
             try {
-                mMediaExtractor.setDataSource(SAMPLE);
+                mMediaExtractor.setDataSource(am.openFd("input.mp4"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             for (int i = 0; i < mMediaExtractor.getTrackCount(); i++) {//遍历数据源音视频轨迹
                 MediaFormat format = mMediaExtractor.getTrackFormat(i);
-                Log.d(TAG, ">> format i " + i + ": " +  format);
+                Log.d(TAG, ">> format i " + i + ": " + format);
                 String mime = format.getString(MediaFormat.KEY_MIME);
-                Log.d(TAG, ">> mime i " + i + ": " +  mime);
+                Log.d(TAG, ">> mime i " + i + ": " + mime);
                 if (mime.startsWith("video/")) {
                     mMediaExtractor.selectTrack(i);
                     try {

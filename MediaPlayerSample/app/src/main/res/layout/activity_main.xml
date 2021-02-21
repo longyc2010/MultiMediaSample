@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="请输入视频文件的路径"
-        android:text="http://192.168.0.100/sanpan.mp4" />
+        android:text="http://samples.mplayerhq.hu/MPEG-4/video.mp4" />
 
     <LinearLayout
         android:layout_width="fill_parent"

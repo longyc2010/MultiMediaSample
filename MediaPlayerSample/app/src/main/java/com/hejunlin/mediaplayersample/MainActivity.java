@@ -54,8 +54,6 @@ public class MainActivity extends Activity implements OnSeekBarChangeListener, O
 
         //是采用自己内部的双缓冲区，而是等待别人推送数据
 
-        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-
     }
 
     /**
